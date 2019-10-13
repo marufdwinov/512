@@ -61,6 +61,10 @@ function drawGame(game) {
                 document.getElementById("tile-" + pos).innerHTML = content.value;
                 document.getElementById("tile-" + pos).style.backgroundColor = "#edc850";
                 document.getElementById("tile-" + pos).style.color = "white";
+              } else if (content.value == "W") {
+                document.getElementById("tile-" + pos).innerHTML = content.value;
+                document.getElementById("tile-" + pos).style.backgroundColor = "#57a7d5";
+                document.getElementById("tile-" + pos).style.color = "white";
               }
             }
             else {
@@ -74,7 +78,7 @@ function test(){
     game = new GameManager();
     tile1 = new Tile({x: 0, y: 0}, 2);
     game.grid.insertTile(tile1);
-    tile2 = new Tile({x: 3, y: 3}, 64);
+    tile2 = new Tile({x: 3, y: 3}, "W");
     game.grid.insertTile(tile2);
     drawGame(game);
 }
