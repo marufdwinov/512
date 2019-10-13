@@ -28,11 +28,11 @@ function drawGame(game) {
               if (content.value == 2) {
                 document.getElementById("tile-" + pos).innerHTML = content.value;
                 document.getElementById("tile-" + pos).style.backgroundColor = "#eee4da";
-                document.getElementById("tile-" + pos).style.color = "#665f57";
+                document.getElementById("tile-" + pos).style.color = "#776e65";
               } else if (content.value == 4) {
                 document.getElementById("tile-" + pos).innerHTML = content.value;
                 document.getElementById("tile-" + pos).style.backgroundColor = "#ede0c8";
-                document.getElementById("tile-" + pos).style.color = "#665f57";
+                document.getElementById("tile-" + pos).style.color = "#776e65";
               } else if (content.value == 8) {
                 document.getElementById("tile-" + pos).innerHTML = content.value;
                 document.getElementById("tile-" + pos).style.backgroundColor = "#f2b179";
@@ -40,27 +40,27 @@ function drawGame(game) {
               } else if (content.value == 16) {
                 document.getElementById("tile-" + pos).innerHTML = content.value;
                 document.getElementById("tile-" + pos).style.backgroundColor = "#f49663";
-                document.getElementById("tile-" + pos).style.color = "#white";
+                document.getElementById("tile-" + pos).style.color = "white";
               } else if (content.value == 32) {
                 document.getElementById("tile-" + pos).innerHTML = content.value;
                 document.getElementById("tile-" + pos).style.backgroundColor = "#f67c5f";
-                document.getElementById("tile-" + pos).style.color = "#white";
+                document.getElementById("tile-" + pos).style.color = "white";
               } else if (content.value == 64) {
                 document.getElementById("tile-" + pos).innerHTML = content.value;
                 document.getElementById("tile-" + pos).style.backgroundColor = "#f65e3b";
-                document.getElementById("tile-" + pos).style.color = "#white";
+                document.getElementById("tile-" + pos).style.color = "white";
               } else if (content.value == 128) {
                 document.getElementById("tile-" + pos).innerHTML = content.value;
                 document.getElementById("tile-" + pos).style.backgroundColor = "#edcf72";
-                document.getElementById("tile-" + pos).style.color = "#white";
+                document.getElementById("tile-" + pos).style.color = "white";
               } else if (content.value == 256) {
                 document.getElementById("tile-" + pos).innerHTML = content.value;
                 document.getElementById("tile-" + pos).style.backgroundColor = "#edcc61";
-                document.getElementById("tile-" + pos).style.color = "#white";
+                document.getElementById("tile-" + pos).style.color = "white";
               } else if (content.value == 512) {
                 document.getElementById("tile-" + pos).innerHTML = content.value;
                 document.getElementById("tile-" + pos).style.backgroundColor = "#edc850";
-                document.getElementById("tile-" + pos).style.color = "#white";
+                document.getElementById("tile-" + pos).style.color = "white";
               }
             }
             else {
