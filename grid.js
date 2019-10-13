@@ -14,10 +14,31 @@ Grid.prototype.empty = function () {
     return cells;
 };
 
-Grid.prototype.insertTile = function(tile) {
+Grid.prototype.insertTile = function (tile) {
     this.cells[tile.x][tile.y] = tile;
 }
 
-Grid.prototype.removeTile = function(tile) {
+Grid.prototype.removeTile = function (tile) {
     this.cells[tile.x][tile.y] = null;
 }
+
+Grid.prototype.withinBounds = function (position) {
+    return position.x >= 0 && position.x < this.size &&
+        position.y >= 0 && position.y < this.size;
+};
+
+Grid.prototype.cellAvailable = function (cell) {
+    return !this.cellOccupied(cell);
+};
+
+Grid.prototype.cellOccupied = function (cell) {
+    return !!this.cellContent(cell);
+};
+
+Grid.prototype.cellContent = function (cell) {
+    if (this.withinBounds(cell)) {
+        return this.cells[cell.x][cell.y];
+    } else {
+        return null;
+    }
+};
