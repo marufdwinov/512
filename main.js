@@ -25,7 +25,47 @@ function drawGame(game) {
             var pos = i*game.grid.size + j + 1;
             content = game.grid.cells[i][j];
             if(content){
+              if (content.value == 2) {
                 document.getElementById("tile-" + pos).innerHTML = content.value;
+                document.getElementById("tile-" + pos).style.backgroundColor = "#eee4da";
+                document.getElementById("tile-" + pos).style.color = "#776e65";
+              } else if (content.value == 4) {
+                document.getElementById("tile-" + pos).innerHTML = content.value;
+                document.getElementById("tile-" + pos).style.backgroundColor = "#ede0c8";
+                document.getElementById("tile-" + pos).style.color = "#776e65";
+              } else if (content.value == 8) {
+                document.getElementById("tile-" + pos).innerHTML = content.value;
+                document.getElementById("tile-" + pos).style.backgroundColor = "#f2b179";
+                document.getElementById("tile-" + pos).style.color = "white";
+              } else if (content.value == 16) {
+                document.getElementById("tile-" + pos).innerHTML = content.value;
+                document.getElementById("tile-" + pos).style.backgroundColor = "#f49663";
+                document.getElementById("tile-" + pos).style.color = "white";
+              } else if (content.value == 32) {
+                document.getElementById("tile-" + pos).innerHTML = content.value;
+                document.getElementById("tile-" + pos).style.backgroundColor = "#f67c5f";
+                document.getElementById("tile-" + pos).style.color = "white";
+              } else if (content.value == 64) {
+                document.getElementById("tile-" + pos).innerHTML = content.value;
+                document.getElementById("tile-" + pos).style.backgroundColor = "#f65e3b";
+                document.getElementById("tile-" + pos).style.color = "white";
+              } else if (content.value == 128) {
+                document.getElementById("tile-" + pos).innerHTML = content.value;
+                document.getElementById("tile-" + pos).style.backgroundColor = "#edcf72";
+                document.getElementById("tile-" + pos).style.color = "white";
+              } else if (content.value == 256) {
+                document.getElementById("tile-" + pos).innerHTML = content.value;
+                document.getElementById("tile-" + pos).style.backgroundColor = "#edcc61";
+                document.getElementById("tile-" + pos).style.color = "white";
+              } else if (content.value == 512) {
+                document.getElementById("tile-" + pos).innerHTML = content.value;
+                document.getElementById("tile-" + pos).style.backgroundColor = "#edc850";
+                document.getElementById("tile-" + pos).style.color = "white";
+              } else if (content.value == "W") {
+                document.getElementById("tile-" + pos).innerHTML = content.value;
+                document.getElementById("tile-" + pos).style.backgroundColor = "#57a7d5";
+                document.getElementById("tile-" + pos).style.color = "white";
+              }
             }
             else {
                 document.getElementById("tile-" + pos).innerHTML = 0;
@@ -38,7 +78,7 @@ function test(){
     game = new GameManager();
     tile1 = new Tile({x: 0, y: 0}, 2);
     game.grid.insertTile(tile1);
-    tile2 = new Tile({x: 3, y: 3}, 2);
+    tile2 = new Tile({x: 3, y: 3}, "W");
     game.grid.insertTile(tile2);
     drawGame(game);
 }
