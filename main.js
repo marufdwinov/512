@@ -72,7 +72,7 @@ function drawGame(game) {
 
 function test(){
     game = new GameManager();
-    tile1 = new Tile({x: 0, y: 0}, 128);
+    tile1 = new Tile({x: 0, y: 0}, 2);
     game.grid.insertTile(tile1);
     tile2 = new Tile({x: 3, y: 3}, 64);
     game.grid.insertTile(tile2);

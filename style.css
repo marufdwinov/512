@@ -84,6 +84,48 @@ td {
   text-align: center;
 }
 
-.tile {
-  font-size: 50px;
+
+/* --------------------- */
+
+.main {
+  margin-top: 10px;
+  background-color: #9e9282;
+  padding: 10px;
+  min-height: 400px;
 }
+
+.content {
+  /* background-color: white; */
+  display: flex;
+  height: 100px;
+}
+
+.box-game {
+  box-sizing: content-box;
+  background-color: #b2a596;
+  width: 150px;
+  min-height: 25%;
+  /* color: white; */
+  font-size: 50px;
+  padding-top: 18px;
+  text-align: center;
+}
+
+.box-1 {
+  margin: 0 6px 6px 0;
+}
+
+.box-2 {
+  margin: 0 0 6px 0;
+}
+
+.box-3 {
+  margin: 0 6px 6px 6px;
+}
+
+.box-4 {
+  margin: 0 0 6px 0;
+}
+ .box-game-down {
+   margin-bottom: 0;
+ }
