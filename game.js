@@ -89,5 +89,5 @@ GameManager.prototype.prepareTiles = function () {
       tile.mergedFrom = null;
       tile.savePosition();
     }
-  })
+  });
 };

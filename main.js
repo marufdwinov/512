@@ -17,10 +17,11 @@ document.addEventListener('keydown', function (event) {
 });
 
 function move(direction) {
-  console.log(direction);
+  // console.log(direction);
   var vector = game.getVector(direction);
   var traversals = game.buildTraversals(vector);
   var moved = false;
+  var lastCoordinate, newCoordinate, nextCoordinate, tile;
   game.prepareTiles();
   // console.log(vector);
   // console.table(traversals);
@@ -45,7 +46,7 @@ function move(direction) {
           game.grid.insertTile(mergedTile);
           game.grid.removeTile(tile);
 
-          tile.updatePosition(tile, newCoordinate);
+          tile.updatePosition(nextCoordinate);
         }
         else {
           game.moveTile(tile, newCoordinate);
@@ -121,13 +122,16 @@ function drawGame(game) { //fungsi drawGame dengan parameter game
     }
 }
 
+
 function test() {
   game = new GameManager();
-  tile1 = new Tile({x: 0, y: 0}, 2);
-  game.grid.insertTile(tile1);
-  tile2 = new Tile({x: 3, y: 3}, 2);
-  game.grid.insertTile(tile2);
-  tile3 = new Tile({x: 0, y: 3}, 2);
-  game.grid.insertTile(tile3);
+  game.addRandomTile();
+  game.addRandomTile();
+  // tile1 = new Tile({x: 0, y: 0}, this.game.addRandomTile());
+  // game.grid.insertTile(tile1);
+  // tile2 = new Tile({x: 3, y: 3}, this.game.addRandomTile());
+  // game.grid.insertTile(tile2);
+  // tile3 = new Tile({x: 0, y: 3}, this.game.addRandomTile());
+  // game.grid.insertTile(tile3);
   drawGame(game);
 }
