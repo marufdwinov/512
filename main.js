@@ -40,11 +40,11 @@ function move(direction) {
         nextCoordinate = data.next;
 
         nextTile = game.grid.cellContent(nextCoordinate);
-        if(nextTile && tile.value === "W"){
+        if(nextTile && tile.value === "W" && !nextTile.mergedFrom){
           scoreFactor = 2; // Twice the score if Wild tile combined
           tile.value = nextTile.value;
         }
-        if(nextTile && nextTile.value === "W"){
+        if(nextTile && nextTile.value === "W" && !nextTile.mergedFrom){
           scoreFactor = 2; // Twice the score if Wild tile combined
           nextTile.value = tile.value;
         }
