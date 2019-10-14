@@ -27,6 +27,7 @@ function move(direction) {
   // console.table(traversals);
   traversals.x.forEach(function (x) {
     traversals.y.forEach(function (y) {
+      var scoreFactor = 1;
       lastCoordinate = {
         x: x,
         y: y
@@ -39,6 +40,14 @@ function move(direction) {
         nextCoordinate = data.next;
 
         nextTile = game.grid.cellContent(nextCoordinate);
+        if(nextTile && tile.value === "W"){
+          scoreFactor = 2; // Twice the score if Wild tile combined
+          tile.value = nextTile.value;
+        }
+        if(nextTile && nextTile.value === "W"){
+          scoreFactor = 2; // Twice the score if Wild tile combined
+          nextTile.value = tile.value;
+        }
         if (nextTile && nextTile.value === tile.value && !nextTile.mergedFrom) {
           var mergedTile = new Tile(nextCoordinate, tile.value * 2);
           mergedTile.mergedFrom = [tile, nextTile];
@@ -48,7 +57,7 @@ function move(direction) {
 
           tile.updatePosition(nextCoordinate);
           // game.score += tile.value * 2;
-          game.setScore(tile.value * 2);
+          game.setScore(tile.value * 2 * scoreFactor);
         }
         else {
           game.moveTile(tile, newCoordinate);
@@ -62,6 +71,7 @@ function move(direction) {
     });
   });
   if (moved) {
+    game.step += 1;
     game.addRandomTile();
   }
   drawGame(game);
