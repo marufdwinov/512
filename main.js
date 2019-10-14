@@ -20,24 +20,47 @@ function move(direction) {
   console.log(direction);
   var vector = game.getVector(direction);
   var traversals = game.buildTraversals(vector);
+  var moved = false;
+  game.prepareTiles();
   // console.log(vector);
   // console.table(traversals);
   traversals.x.forEach(function (x) {
     traversals.y.forEach(function (y) {
-      coordinate = {
+      lastCoordinate = {
         x: x,
         y: y
       };
-      tile = game.grid.cellContent(coordinate);
+      tile = game.grid.cellContent(lastCoordinate);
       if(tile){
-        // console.log(game.findFarthestPosition(coordinate, vector));
-        var data = game.findFarthestPosition(coordinate, vector);
-        game.grid.removeTile(coordinate);
-        game.grid.insertTile(new Tile(data.farthest, tile.value));
+        // console.log(game.findFarthestPosition(lastCoordinate, vector));
+        var data = game.findFarthestPosition(lastCoordinate, vector);
+        newCoordinate = data.farthest;
+        nextCoordinate = data.next;
+
+        nextTile = game.grid.cellContent(nextCoordinate);
+        if (nextTile && nextTile.value === tile.value && !nextTile.mergedFrom) {
+          var mergedTile = new Tile(nextCoordinate, tile.value * 2);
+          mergedTile.mergedFrom = [tile, nextTile];
+
+          game.grid.insertTile(mergedTile);
+          game.grid.removeTile(tile);
+
+          tile.updatePosition(tile, newCoordinate);
+        }
+        else {
+          game.moveTile(tile, newCoordinate);
+        }
+        if (!game.positionsEqual(lastCoordinate, tile)) {
+          moved = true;
+        }
+
       }
+
     });
   });
-  game.addRandomTile();
+  if (moved) {
+    game.addRandomTile();
+  }
   drawGame(game);
 }
 

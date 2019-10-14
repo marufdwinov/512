@@ -45,7 +45,7 @@ Grid.prototype.cellContent = function (cell) {
 
 /////////////////////////////////////////
 
-Grid.prototype.eachCell = function (callback) {
+Grid.prototype.eachCell = function (callback) { //acak x, y
   for (var x = 0; x < this.size; x++) {
     for (var y = 0; y < this.size; y++) {
       callback(x, y, this.cells[x][y]);
@@ -57,7 +57,7 @@ Grid.prototype.availableCells = function () {
   var cells = [];
 
   this.eachCell(function (x, y, tile) {
-    if (!tile) {
+    if (!tile) { //mencari tile kosong dari value ada ada / tidak
       cells.push({
         x : x,
         y : y

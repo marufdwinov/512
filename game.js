@@ -63,13 +63,15 @@ GameManager.prototype.findFarthestPosition = function (cell, vector) {
     };
 };
 
+
+////////////////////////////
 GameManager.prototype.moveTile = function (lastPosition, newPosition) {
   this.grid.cells[lastPosition.x][lastPosition.y] = null;
   this.grid.cells[newPosition.x][newPosition.y] = lastPosition;
   lastPosition.updatePosition(newPosition);
 };
 
-GameManager.prototype.positionEqual = function (first, second) {
+GameManager.prototype.positionsEqual = function (first, second) {
   return first.x === second.x && first.y === second.y;
 };
 
@@ -79,4 +81,13 @@ GameManager.prototype.addRandomTile = function () {
     var tile = new Tile(this.grid.randomAvailableCell(), value);
     this.grid.insertTile(tile);
   }
+};
+
+GameManager.prototype.prepareTiles = function () {
+  this.grid.eachCell(function(x,y,tile){
+    if (tile) {
+      tile.mergedFrom = null;
+      tile.savePosition();
+    }
+  })
 };
