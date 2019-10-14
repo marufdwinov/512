@@ -62,3 +62,21 @@ GameManager.prototype.findFarthestPosition = function (cell, vector) {
         next: cell
     };
 };
+
+GameManager.prototype.moveTile = function (lastPosition, newPosition) {
+  this.grid.cells[lastPosition.x][lastPosition.y] = null;
+  this.grid.cells[newPosition.x][newPosition.y] = lastPosition;
+  lastPosition.updatePosition(newPosition);
+};
+
+GameManager.prototype.positionEqual = function (first, second) {
+  return first.x === second.x && first.y === second.y;
+};
+
+GameManager.prototype.addRandomTile = function () {
+  if (this.grid.cellsAvailable()) {
+    var value = Math.random() < 0.9 ? 2 : 4;
+    var tile = new Tile(this.grid.randomAvailableCell(), value);
+    this.grid.insertTile(tile);
+  }
+};

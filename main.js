@@ -37,6 +37,7 @@ function move(direction) {
       }
     });
   });
+  game.addRandomTile();
   drawGame(game);
 }
 
