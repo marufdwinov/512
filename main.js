@@ -78,8 +78,25 @@ function move(direction) {
 }
 
 function drawGame(game) { //fungsi drawGame dengan parameter game
+    var lastScore = document.getElementById("score").innerHTML;
+    var difference = game.score - lastScore;
     document.getElementById("score").innerHTML = game.score;
-    document.getElementById("best-score").innerHTML = game.bestScore;
+
+    if(difference > 0){
+      var addition = document.createElement("div");
+      addition.classList.add("score-addition");
+      addition.textContent = "+" + difference;
+      document.querySelector("#score-container-box").appendChild(addition);
+    }
+
+    if(document.getElementById("best-score").innerHTML != game.bestScore){
+      document.getElementById("best-score").innerHTML = game.bestScore;
+      var addition = document.createElement("div");
+      addition.classList.add("score-addition");
+      addition.textContent = game.bestScore;
+      document.querySelector("#best-container-box").appendChild(addition);
+    }
+
     for (var i = 0; i < game.grid.size; i++) {
         for (var j = 0; j < game.grid.size; j++) {
             var pos = i*game.grid.size + j + 1;
