@@ -4,15 +4,16 @@ document.addEventListener('keydown', function (event) {
   // 37 kiri
   // 39 kanan
   event.preventDefault();
-  if (event.keyCode == 38) {
+  if (event.keyCode == 38 || event.keyCode == 87) {
     move(3);
-  } else if (event.keyCode == 40) {
+  } else if (event.keyCode == 40 || event.keyCode == 83) {
     move(1);
-  } else if (event.keyCode == 37) {
+  } else if (event.keyCode == 37 || event.keyCode == 65) {
     move(0);
-  } else if (event.keyCode == 39) {
+  } else if (event.keyCode == 39 || event.keyCode == 68) {
     move(2);
   }
+  // console.log(event.keyCode);
 });
 
 function move(direction) {
@@ -28,7 +29,6 @@ function move(direction) {
         y: y
       };
       tile = game.grid.cellContent(coordinate);
-      // console.log(x, y, game.getTile(coordinate));
       if(tile){
         // console.log(game.findFarthestPosition(coordinate, vector));
         var data = game.findFarthestPosition(coordinate, vector);
@@ -89,7 +89,9 @@ function drawGame(game) { //fungsi drawGame dengan parameter game
               }
             }
             else {
-                document.getElementById("tile-" + pos).innerHTML = 0;
+                document.getElementById("tile-" + pos).innerHTML = "";
+                document.getElementById("tile-" + pos).style.backgroundColor = "#b2a596";
+                document.getElementById("tile-" + pos).style.color = "black";
             }
         }
     }

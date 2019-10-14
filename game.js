@@ -29,14 +29,14 @@ GameManager.prototype.getVector = function (direction) { //membuat peta vektor a
 
 GameManager.prototype.buildTraversals = function (vector) {
     var traversals = {
-        x: [],
-        y: []
+        x: [0,1,2,3],
+        y: [0,1,2,3]
     };
 
-    for (var pos = 0; pos < this.size; pos++) {
-        traversals.x.push(pos);
-        traversals.y.push(pos);
-    }
+    // for (var pos = 0; pos < this.size; pos++) {
+    //     traversals.x.push(pos);
+    //     traversals.y.push(pos);
+    // }
 
     if (vector.x === 1) traversals.x = traversals.x.reverse();
     if (vector.y === 1) traversals.y = traversals.y.reverse();
@@ -44,9 +44,6 @@ GameManager.prototype.buildTraversals = function (vector) {
     return traversals;
 };
 
-GameManager.prototype.getTile = function (coordinate) {
-    return this.grid.cells[coordinate.x][coordinate.y];
-}
 
 GameManager.prototype.findFarthestPosition = function (cell, vector) {
     var previous;
