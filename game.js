@@ -1,7 +1,24 @@
 function GameManager(){
     this.size = 4;
     this.grid = new Grid(4);
+    this.score = 0;
+    var bestScoreData = localStorage.getItem("best");
+    if(bestScoreData){
+      this.bestScore = bestScoreData;
+    }
+    else {
+      localStorage.setItem("best", 0);
+      this.bestScore = 0;
+    }
 }
+
+GameManager.prototype.setScore = function (score) {
+  this.score += score;
+  if(this.score > this.bestScore){
+    this.bestScore = this.score;
+    localStorage.setItem("best", this.bestScore);
+  }
+};
 
 GameManager.prototype.getVector = function (direction) { //membuat peta vektor arah
     // Vectors representing tile movement

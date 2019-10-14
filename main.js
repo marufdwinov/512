@@ -47,6 +47,8 @@ function move(direction) {
           game.grid.removeTile(tile);
 
           tile.updatePosition(nextCoordinate);
+          // game.score += tile.value * 2;
+          game.setScore(tile.value * 2);
         }
         else {
           game.moveTile(tile, newCoordinate);
@@ -66,6 +68,8 @@ function move(direction) {
 }
 
 function drawGame(game) { //fungsi drawGame dengan parameter game
+    document.getElementById("score").innerHTML = game.score;
+    document.getElementById("best-score").innerHTML = game.bestScore;
     for (var i = 0; i < game.grid.size; i++) {
         for (var j = 0; j < game.grid.size; j++) {
             var pos = i*game.grid.size + j + 1;
