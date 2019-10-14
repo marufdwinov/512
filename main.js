@@ -101,6 +101,9 @@ function drawGame(game) { //fungsi drawGame dengan parameter game
         for (var j = 0; j < game.grid.size; j++) {
             var pos = i*game.grid.size + j + 1;
             content = game.grid.cells[i][j];
+            if(document.getElementById("tile-"+pos).classList.contains("tile-merged")){
+              document.getElementById("tile-"+pos).classList.remove("tile-merged");
+            }
             if(content){
               if (content.value == 2) {
                 document.getElementById("tile-" + pos).innerHTML = content.value;
@@ -142,6 +145,10 @@ function drawGame(game) { //fungsi drawGame dengan parameter game
                 document.getElementById("tile-" + pos).innerHTML = content.value;
                 document.getElementById("tile-" + pos).style.backgroundColor = "#57a7d5";
                 document.getElementById("tile-" + pos).style.color = "white";
+              }
+
+              if(content.newTile){
+                document.getElementById("tile-"+pos).classList.add("tile-merged");
               }
             }
             else {

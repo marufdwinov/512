@@ -111,6 +111,7 @@ GameManager.prototype.prepareTiles = function () {
   this.grid.eachCell(function(x,y,tile){
     if (tile) {
       tile.mergedFrom = null;
+      tile.newTile = false;
       tile.savePosition();
     }
   });
