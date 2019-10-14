@@ -1,25 +1,75 @@
 document.addEventListener('keydown', function (event) {
-    // 38 atas
-    // 40 bawah
-    // 37 kiri
-    // 39 kanan
-    // console.log(event.keyCode);
-    if (event.keyCode == 38) {
-        move(3);
-    } else if (event.keyCode == 40) {
-        move(1);
-    } else if (event.keyCode == 37) {
-        move(0);
-    } else if (event.keyCode == 39) {
-        move(2);
-    }
+  // 38 atas
+  // 40 bawah
+  // 37 kiri
+  // 39 kanan
+  event.preventDefault();
+  if (event.keyCode == 38 || event.keyCode == 87) {
+    move(3);
+  } else if (event.keyCode == 40 || event.keyCode == 83) {
+    move(1);
+  } else if (event.keyCode == 37 || event.keyCode == 65) {
+    move(0);
+  } else if (event.keyCode == 39 || event.keyCode == 68) {
+    move(2);
+  }
+  // console.log(event.keyCode);
 });
 
-function move(direction){
-    console.log(direction);
+function move(direction) {
+  // console.log(direction);
+  var vector = game.getVector(direction);
+  var traversals = game.buildTraversals(vector);
+  var moved = false;
+  var lastCoordinate, newCoordinate, nextCoordinate, tile;
+  game.prepareTiles();
+  // console.log(vector);
+  // console.table(traversals);
+  traversals.x.forEach(function (x) {
+    traversals.y.forEach(function (y) {
+      lastCoordinate = {
+        x: x,
+        y: y
+      };
+      tile = game.grid.cellContent(lastCoordinate);
+      if(tile){
+        // console.log(game.findFarthestPosition(lastCoordinate, vector));
+        var data = game.findFarthestPosition(lastCoordinate, vector);
+        newCoordinate = data.farthest;
+        nextCoordinate = data.next;
+
+        nextTile = game.grid.cellContent(nextCoordinate);
+        if (nextTile && nextTile.value === tile.value && !nextTile.mergedFrom) {
+          var mergedTile = new Tile(nextCoordinate, tile.value * 2);
+          mergedTile.mergedFrom = [tile, nextTile];
+
+          game.grid.insertTile(mergedTile);
+          game.grid.removeTile(tile);
+
+          tile.updatePosition(nextCoordinate);
+          // game.score += tile.value * 2;
+          game.setScore(tile.value * 2);
+        }
+        else {
+          game.moveTile(tile, newCoordinate);
+        }
+        if (!game.positionsEqual(lastCoordinate, tile)) {
+          moved = true;
+        }
+
+      }
+
+    });
+  });
+  if (moved) {
+    game.addRandomTile();
+  }
+  drawGame(game);
 }
 
-function drawGame(game) {
+function drawGame(game) { //fungsi drawGame dengan parameter game
+    document.getElementById("score").innerHTML = game.score;
+    document.getElementById("best-score").innerHTML = game.bestScore;
     for (var i = 0; i < game.grid.size; i++) {
         for (var j = 0; j < game.grid.size; j++) {
             var pos = i*game.grid.size + j + 1;
@@ -59,7 +109,7 @@ function drawGame(game) {
                 document.getElementById("tile-" + pos).style.color = "white";
               } else if (content.value == 512) {
                 document.getElementById("tile-" + pos).innerHTML = content.value;
-                document.getElementById("tile-" + pos).style.backgroundColor = "#edc850";
+                document.getElementById("tile-" + pos).style.backgroundColor = "#f8c315";
                 document.getElementById("tile-" + pos).style.color = "white";
               } else if (content.value == "W") {
                 document.getElementById("tile-" + pos).innerHTML = content.value;
@@ -68,17 +118,24 @@ function drawGame(game) {
               }
             }
             else {
-                document.getElementById("tile-" + pos).innerHTML = 0;
+                document.getElementById("tile-" + pos).innerHTML = "";
+                document.getElementById("tile-" + pos).style.backgroundColor = "#b2a596";
+                document.getElementById("tile-" + pos).style.color = "black";
             }
         }
     }
 }
 
-function test(){
-    game = new GameManager();
-    tile1 = new Tile({x: 0, y: 0}, 2);
-    game.grid.insertTile(tile1);
-    tile2 = new Tile({x: 3, y: 3}, "W");
-    game.grid.insertTile(tile2);
-    drawGame(game);
+
+function test() {
+  game = new GameManager();
+  game.addRandomTile();
+  game.addRandomTile();
+  // tile1 = new Tile({x: 0, y: 0}, this.game.addRandomTile());
+  // game.grid.insertTile(tile1);
+  // tile2 = new Tile({x: 3, y: 3}, this.game.addRandomTile());
+  // game.grid.insertTile(tile2);
+  // tile3 = new Tile({x: 0, y: 3}, this.game.addRandomTile());
+  // game.grid.insertTile(tile3);
+  drawGame(game);
 }
