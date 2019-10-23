@@ -2,6 +2,7 @@ function GameManager(){
     this.size = 4;
     this.grid = new Grid(4);
     this.score = 0;
+    this.step = 0;
     var bestScoreData = localStorage.getItem("best");
     if(bestScoreData){
       this.bestScore = bestScoreData;
@@ -94,7 +95,13 @@ GameManager.prototype.positionsEqual = function (first, second) {
 
 GameManager.prototype.addRandomTile = function () {
   if (this.grid.cellsAvailable()) {
-    var value = Math.random() < 0.9 ? 2 : 4;
+    if(this.step >= 8){
+      this.step = 0;
+      var value = "W";
+    }
+    else {
+      var value = Math.random() < 0.9 ? 2 : 4;
+    }
     var tile = new Tile(this.grid.randomAvailableCell(), value);
     this.grid.insertTile(tile);
   }
@@ -104,6 +111,7 @@ GameManager.prototype.prepareTiles = function () {
   this.grid.eachCell(function(x,y,tile){
     if (tile) {
       tile.mergedFrom = null;
+      tile.newTile = false;
       tile.savePosition();
     }
   });

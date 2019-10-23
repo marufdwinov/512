@@ -27,6 +27,7 @@ function move(direction) {
   // console.table(traversals);
   traversals.x.forEach(function (x) {
     traversals.y.forEach(function (y) {
+      var scoreFactor = 1;
       lastCoordinate = {
         x: x,
         y: y
@@ -39,6 +40,14 @@ function move(direction) {
         nextCoordinate = data.next;
 
         nextTile = game.grid.cellContent(nextCoordinate);
+        if(nextTile && tile.value === "W" && !nextTile.mergedFrom){
+          scoreFactor = 2; // Twice the score if Wild tile combined
+          tile.value = nextTile.value;
+        }
+        if(nextTile && nextTile.value === "W" && !nextTile.mergedFrom){
+          scoreFactor = 2; // Twice the score if Wild tile combined
+          nextTile.value = tile.value;
+        }
         if (nextTile && nextTile.value === tile.value && !nextTile.mergedFrom) {
           var mergedTile = new Tile(nextCoordinate, tile.value * 2);
           mergedTile.mergedFrom = [tile, nextTile];
@@ -48,7 +57,7 @@ function move(direction) {
 
           tile.updatePosition(nextCoordinate);
           // game.score += tile.value * 2;
-          game.setScore(tile.value * 2);
+          game.setScore(tile.value * 2 * scoreFactor);
         }
         else {
           game.moveTile(tile, newCoordinate);
@@ -62,18 +71,39 @@ function move(direction) {
     });
   });
   if (moved) {
+    game.step += 1;
     game.addRandomTile();
   }
   drawGame(game);
 }
 
 function drawGame(game) { //fungsi drawGame dengan parameter game
+    var lastScore = document.getElementById("score").innerHTML;
+    var difference = game.score - lastScore;
     document.getElementById("score").innerHTML = game.score;
-    document.getElementById("best-score").innerHTML = game.bestScore;
+
+    if(difference > 0){
+      var addition = document.createElement("div");
+      addition.classList.add("score-addition");
+      addition.textContent = "+" + difference;
+      document.querySelector("#score-container-box").appendChild(addition);
+    }
+
+    if(document.getElementById("best-score").innerHTML != game.bestScore){
+      document.getElementById("best-score").innerHTML = game.bestScore;
+      var addition = document.createElement("div");
+      addition.classList.add("score-addition");
+      addition.textContent = game.bestScore;
+      document.querySelector("#best-container-box").appendChild(addition);
+    }
+
     for (var i = 0; i < game.grid.size; i++) {
         for (var j = 0; j < game.grid.size; j++) {
             var pos = i*game.grid.size + j + 1;
             content = game.grid.cells[i][j];
+            if(document.getElementById("tile-"+pos).classList.contains("tile-merged")){
+              document.getElementById("tile-"+pos).classList.remove("tile-merged");
+            }
             if(content){
               if (content.value == 2) {
                 document.getElementById("tile-" + pos).innerHTML = content.value;
@@ -115,6 +145,10 @@ function drawGame(game) { //fungsi drawGame dengan parameter game
                 document.getElementById("tile-" + pos).innerHTML = content.value;
                 document.getElementById("tile-" + pos).style.backgroundColor = "#57a7d5";
                 document.getElementById("tile-" + pos).style.color = "white";
+              }
+
+              if(content.newTile){
+                document.getElementById("tile-"+pos).classList.add("tile-merged");
               }
             }
             else {

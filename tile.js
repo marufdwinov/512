@@ -6,12 +6,14 @@ function Tile(position, value){ //membuat Tile dengan parameter position x,y dan
     this.value = value || 2;
     this.mergedFrom = null;
     this.previousPosition = null;
+    this.newTile = true;
 }
 
 ///////////////////////////////
 Tile.prototype.updatePosition = function (position) {
   this.x = position.x;
   this.y = position.y;
+  this.newTile = false;
 };
 
 Tile.prototype.savePosition = function () {
