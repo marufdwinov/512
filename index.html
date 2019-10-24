@@ -9,6 +9,35 @@
 </head>
 <body>
     <div class="container">
+      <div id="end-game-container">
+        <div class="end-game-page">
+          You Win :)
+        </div>
+      </div>
+
+      <div id="start-container">
+        <div class="start-page">
+          <p class="instruction">
+            <h1 class="title-instruction">Instructions</h1>
+            1. The game will show the high score and current score as long as the game is played.
+<br><br>
+            2. Player can play the game by using WASD or Arrow Keys.
+<br><br>
+            3. W or Arrow Up will move all node upwards and combine all node with same value or with wild node.
+<br><br>
+            4. S or Arrow Down will move all node downwards and combine all node with same value or with wild node.
+<br><br>
+            5. A or Arrow Left will move all node to the left side and combine all node with same value or with wild node.
+
+</p>
+        <div class="btn-center">
+          <button class="button-start1" type="button" onclick="test()" name="button">Start Game</button>
+        </div>
+        </div>
+      </div>
+
+
+
       <div class="head">
         <div class="title">
           <div class="title1 text">
@@ -28,9 +57,16 @@
         </div>
       </div>
 
-      <div class="head button">
-        <button class="right-box-down text" type="button" name="button" onclick="test()">New Game</button>
+      <div class="">
+        <div onclick="toogleAudio();" class="speaker">
+          <img style="display:none;" id="audio-on" class="" src="speaker.svg" alt="">
+          <img id="audio-off" class="" src="mute.svg" alt="">
+        </div>
+        <div class="head button">
+          <button class="right-box-down text" type="button" name="button" onclick="test()">Reset Game</button>
+        </div>
       </div>
+
 
       <div class="main">
         <div class="content">

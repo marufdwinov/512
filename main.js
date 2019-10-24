@@ -18,6 +18,9 @@ document.addEventListener('keydown', function (event) {
 
 function move(direction) {
   // console.log(direction);
+  if (game.finished) {
+    return;
+  }
   var vector = game.getVector(direction);
   var traversals = game.buildTraversals(vector);
   var moved = false;
@@ -58,6 +61,10 @@ function move(direction) {
           tile.updatePosition(nextCoordinate);
           // game.score += tile.value * 2;
           game.setScore(tile.value * 2 * scoreFactor);
+          if (tile.value * 2 === 512) {
+            game.win = true;
+            game.finished = true;
+          }
         }
         else {
           game.moveTile(tile, newCoordinate);
@@ -71,6 +78,7 @@ function move(direction) {
     });
   });
   if (moved) {
+    moveAudio.play();
     game.step += 1;
     game.addRandomTile();
   }
@@ -158,18 +166,49 @@ function drawGame(game) { //fungsi drawGame dengan parameter game
             }
         }
     }
+    if (game.win) {
+      gameWin();
+    }
 }
 
+var bgAudio = new Audio('sounds/background.mp3');
+var moveAudio = new Audio('sounds/move.mp3');
+var muted = false;
+bgAudio.volume = 0.5;
 
 function test() {
+  // audio.play();
+
+  document.getElementById("end-game-container").style.display = "none";
+
+  document.getElementById("start-container").style.width = "0px";
+  document.getElementById("start-container").style.padding = "0px";
   game = new GameManager();
-  game.addRandomTile();
-  game.addRandomTile();
-  // tile1 = new Tile({x: 0, y: 0}, this.game.addRandomTile());
+  // tile1 = new Tile({x:0,y:3}, 2);
   // game.grid.insertTile(tile1);
-  // tile2 = new Tile({x: 3, y: 3}, this.game.addRandomTile());
+  // tile2 = new Tile({x:1,y:2}, 4);
   // game.grid.insertTile(tile2);
-  // tile3 = new Tile({x: 0, y: 3}, this.game.addRandomTile());
-  // game.grid.insertTile(tile3);
+  game.addRandomTile();
+  game.addRandomTile();
+
   drawGame(game);
+}
+
+function gameWin() {
+  document.getElementById("end-game-container").style.display = "block";
+}
+
+function toogleAudio() {
+  // console.log(muted);
+  if (muted) {
+    bgAudio.pause();
+    document.getElementById("audio-on").style.display = "none";
+    document.getElementById("audio-off").style.display = "block";
+  }
+  else {
+    bgAudio.play();
+    document.getElementById("audio-on").style.display = "block";
+    document.getElementById("audio-off").style.display = "none";
+  }
+  muted = !muted;
 }
