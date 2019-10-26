@@ -180,6 +180,8 @@ function drawGame(game) { //fungsi drawGame dengan parameter game
 
 var bgAudio = new Audio('sounds/background.mp3');
 var moveAudio = new Audio('sounds/move.mp3');
+var yayAudio = new Audio('sounds/yay.mp3');
+var loseAudio = new Audio('sounds/lose.mp3');
 var muted = false;
 bgAudio.volume = 0.5;
 
@@ -204,11 +206,15 @@ function test() {
 function gameWin() {
   document.getElementById("end-game-container").style.display = "block";
   document.getElementById("end-game-page").innerHTML = "You Win :)";
+  bgAudio.pause();
+  yayAudio.play();
 }
 
 function gameLose() {
   document.getElementById("end-game-container").style.display = "block";
   document.getElementById("end-game-page").innerHTML = "You Lose :(";
+  bgAudio.pause();
+  loseAudio.play();
 }
 
 function toogleAudio() {
