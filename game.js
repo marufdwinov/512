@@ -3,6 +3,9 @@ function GameManager(){
     this.grid = new Grid(4);
     this.score = 0;
     this.step = 0;
+    this.win = false;
+    this.lose = false;
+    this.finished = false;
     var bestScoreData = localStorage.getItem("best");
     if(bestScoreData){
       this.bestScore = bestScoreData;
@@ -115,4 +118,35 @@ GameManager.prototype.prepareTiles = function () {
       tile.savePosition();
     }
   });
+};
+
+GameManager.prototype.stillCanMove = function () {
+  for(var x = 0; x < 4; x++){
+    for(var y = 0; y < 4; y++){
+      var coordinate = {
+        x: x,
+        y: y
+      };
+      tile = this.grid.cellContent(coordinate);
+      if(tile === null || tile.value === "W"){
+        return true; // Masih ada kotak yang kosong atau masih ada kotak Wild
+      }
+
+      // Cek setiap arah
+      for(var move = 0; move < 4; move++){
+        vector = this.getVector(move);
+        nextCoordinate = {
+          x: x+vector.x,
+          y: y+vector.y
+        };
+
+        nextTile = this.grid.cellContent(nextCoordinate);
+
+        if (nextTile && nextTile.value === tile.value) {
+          return true; // Masih ada yang bisa di gabung
+        }
+      }
+    }
+  }
+  return false;
 };

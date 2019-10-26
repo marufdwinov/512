@@ -81,6 +81,10 @@ function move(direction) {
     moveAudio.play();
     game.step += 1;
     game.addRandomTile();
+    if(!game.stillCanMove()){
+      game.lose = true;
+      game.finished = true;
+    }
   }
   drawGame(game);
 }
@@ -169,6 +173,9 @@ function drawGame(game) { //fungsi drawGame dengan parameter game
     if (game.win) {
       gameWin();
     }
+    if (game.lose) {
+      gameLose();
+    }
 }
 
 var bgAudio = new Audio('sounds/background.mp3');
@@ -196,6 +203,12 @@ function test() {
 
 function gameWin() {
   document.getElementById("end-game-container").style.display = "block";
+  document.getElementById("end-game-page").innerHTML = "You Win :)";
+}
+
+function gameLose() {
+  document.getElementById("end-game-container").style.display = "block";
+  document.getElementById("end-game-page").innerHTML = "You Lose :(";
 }
 
 function toogleAudio() {
@@ -211,4 +224,22 @@ function toogleAudio() {
     document.getElementById("audio-off").style.display = "none";
   }
   muted = !muted;
+}
+
+function testLose(){
+  game = new GameManager();
+  // var tile = [2,4,2,4,4,2,4,2,2,4,2,4,4,2,4,2];
+  var tile = [2,4,2,16,32,64,128,256,2,4,8,16,32,64,128];
+  var i = 0;
+  for(var x = 0; x < 4; x++){
+    for(var y = 0; y < 4; y++){
+      if(i>14){
+        break;
+      }
+      newTile = new Tile({x:x,y:y}, tile[i++]);
+      game.grid.insertTile(newTile);
+    }
+  }
+
+  drawGame(game);
 }
