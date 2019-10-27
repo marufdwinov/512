@@ -1,4 +1,4 @@
-function GameManager(){
+function GameManager(mode){
     this.size = 4;
     this.grid = new Grid(4);
     this.score = 0;
@@ -6,6 +6,7 @@ function GameManager(){
     this.win = false;
     this.lose = false;
     this.finished = false;
+    this.mode = mode;
     var bestScoreData = localStorage.getItem("best");
     if(bestScoreData){
       this.bestScore = bestScoreData;
@@ -98,11 +99,16 @@ GameManager.prototype.positionsEqual = function (first, second) {
 
 GameManager.prototype.addRandomTile = function () {
   if (this.grid.cellsAvailable()) {
-    if(this.step >= 8){
-      this.step = 0;
-      var value = "W";
+    if(this.mode === 1){ // Jika Wild mode
+      if(this.step >= 8){
+        this.step = 0;
+        var value = "W";
+      }
+      else {
+        var value = Math.random() < 0.9 ? 2 : 4;
+      }
     }
-    else {
+    else { // Jika normal mode
       var value = Math.random() < 0.9 ? 2 : 4;
     }
     var tile = new Tile(this.grid.randomAvailableCell(), value);

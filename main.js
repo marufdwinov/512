@@ -94,6 +94,11 @@ function drawGame(game) { //fungsi drawGame dengan parameter game
     var difference = game.score - lastScore;
     document.getElementById("score").innerHTML = game.score;
 
+    if(game.mode === 0){ // Jika normal mode
+      document.getElementById("score").innerHTML = countAllTileScore();
+      difference = game.score; // Efek melayang angka pada skor adalah total skor yang sesungguhnya
+    }
+
     if(difference > 0){
       var addition = document.createElement("div");
       addition.classList.add("score-addition");
@@ -192,7 +197,7 @@ function test() {
 
   document.getElementById("start-container").style.width = "0px";
   document.getElementById("start-container").style.padding = "0px";
-  game = new GameManager();
+  game = new GameManager(mode);
   // tile1 = new Tile({x:0,y:3}, 2);
   // game.grid.insertTile(tile1);
   // tile2 = new Tile({x:1,y:2}, 4);
@@ -248,4 +253,28 @@ function testLose(){
   }
 
   drawGame(game);
+}
+
+var mode = 1; // Menyimpan mode saat reset. Default mode = Wild
+
+function start(startMode){ // Mode 0 = Normal, 1 = Wild
+  mode = startMode;
+  test();
+}
+
+function countAllTileScore(){
+  var total = 0;
+  for(var x = 0; x < 4; x++){
+    for(var y = 0; y < 4; y++){
+      coordinate = {
+        x: x,
+        y: y
+      };
+      tile = game.grid.cellContent(coordinate);
+      if(tile){ // Kalau tilenya tidak kosong
+        total += tile.value;
+      }
+    }
+  }
+  return total;
 }

@@ -82,7 +82,7 @@ h1.title-instruction {
   padding: 10px;
   border-radius: 5px;
   margin: auto;
-
+  cursor: pointer;
 }
 
 .btn-center {
