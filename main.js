@@ -18,6 +18,9 @@ document.addEventListener('keydown', function (event) {
 
 function move(direction) {
   // console.log(direction);
+  if (game.finished) {
+    return;
+  }
   var vector = game.getVector(direction);
   var traversals = game.buildTraversals(vector);
   var moved = false;
@@ -58,6 +61,10 @@ function move(direction) {
           tile.updatePosition(nextCoordinate);
           // game.score += tile.value * 2;
           game.setScore(tile.value * 2 * scoreFactor);
+          if (tile.value * 2 === 512) {
+            game.win = true;
+            game.finished = true;
+          }
         }
         else {
           game.moveTile(tile, newCoordinate);
@@ -71,8 +78,13 @@ function move(direction) {
     });
   });
   if (moved) {
+    moveAudio.play();
     game.step += 1;
     game.addRandomTile();
+    if(!game.stillCanMove()){
+      game.lose = true;
+      game.finished = true;
+    }
   }
   drawGame(game);
 }
@@ -81,6 +93,11 @@ function drawGame(game) { //fungsi drawGame dengan parameter game
     var lastScore = document.getElementById("score").innerHTML;
     var difference = game.score - lastScore;
     document.getElementById("score").innerHTML = game.score;
+
+    if(game.mode === 0){ // Jika normal mode
+      document.getElementById("score").innerHTML = countAllTileScore();
+      difference = game.score; // Efek melayang angka pada skor adalah total skor yang sesungguhnya
+    }
 
     if(difference > 0){
       var addition = document.createElement("div");
@@ -158,18 +175,106 @@ function drawGame(game) { //fungsi drawGame dengan parameter game
             }
         }
     }
+    if (game.win) {
+      gameWin();
+    }
+    if (game.lose) {
+      gameLose();
+    }
 }
 
+var bgAudio = new Audio('sounds/background.mp3');
+var moveAudio = new Audio('sounds/move.mp3');
+var yayAudio = new Audio('sounds/yay.mp3');
+var loseAudio = new Audio('sounds/lose.mp3');
+var muted = false;
+bgAudio.volume = 0.5;
 
 function test() {
-  game = new GameManager();
-  game.addRandomTile();
-  game.addRandomTile();
-  // tile1 = new Tile({x: 0, y: 0}, this.game.addRandomTile());
+  // audio.play();
+
+  document.getElementById("end-game-container").style.display = "none";
+
+  document.getElementById("start-container").style.width = "0px";
+  document.getElementById("start-container").style.padding = "0px";
+  game = new GameManager(mode);
+  // tile1 = new Tile({x:0,y:3}, 2);
   // game.grid.insertTile(tile1);
-  // tile2 = new Tile({x: 3, y: 3}, this.game.addRandomTile());
+  // tile2 = new Tile({x:1,y:2}, 4);
   // game.grid.insertTile(tile2);
-  // tile3 = new Tile({x: 0, y: 3}, this.game.addRandomTile());
-  // game.grid.insertTile(tile3);
+  game.addRandomTile();
+  game.addRandomTile();
+
   drawGame(game);
+}
+
+function gameWin() {
+  document.getElementById("end-game-container").style.display = "block";
+  document.getElementById("end-game-page").innerHTML = "You Win :)";
+  bgAudio.pause();
+  yayAudio.play();
+}
+
+function gameLose() {
+  document.getElementById("end-game-container").style.display = "block";
+  document.getElementById("end-game-page").innerHTML = "You Lose :(";
+  bgAudio.pause();
+  loseAudio.play();
+}
+
+function toogleAudio() {
+  // console.log(muted);
+  if (muted) {
+    bgAudio.pause();
+    document.getElementById("audio-on").style.display = "none";
+    document.getElementById("audio-off").style.display = "block";
+  }
+  else {
+    bgAudio.play();
+    document.getElementById("audio-on").style.display = "block";
+    document.getElementById("audio-off").style.display = "none";
+  }
+  muted = !muted;
+}
+
+function testLose(){
+  game = new GameManager();
+  // var tile = [2,4,2,4,4,2,4,2,2,4,2,4,4,2,4,2];
+  var tile = [2,4,2,16,32,64,128,256,2,4,8,16,32,64,128];
+  var i = 0;
+  for(var x = 0; x < 4; x++){
+    for(var y = 0; y < 4; y++){
+      if(i>14){
+        break;
+      }
+      newTile = new Tile({x:x,y:y}, tile[i++]);
+      game.grid.insertTile(newTile);
+    }
+  }
+
+  drawGame(game);
+}
+
+var mode = 1; // Menyimpan mode saat reset. Default mode = Wild
+
+function start(startMode){ // Mode 0 = Normal, 1 = Wild
+  mode = startMode;
+  test();
+}
+
+function countAllTileScore(){
+  var total = 0;
+  for(var x = 0; x < 4; x++){
+    for(var y = 0; y < 4; y++){
+      coordinate = {
+        x: x,
+        y: y
+      };
+      tile = game.grid.cellContent(coordinate);
+      if(tile){ // Kalau tilenya tidak kosong
+        total += tile.value;
+      }
+    }
+  }
+  return total;
 }

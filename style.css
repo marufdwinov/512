@@ -10,6 +10,87 @@ p {
   margin: 0;
 }
 
+#end-game-container {
+    position: absolute;
+    z-index: 999;
+    width: 100%;
+    width: 480px;
+    height: 415px;
+    text-align: center;
+    margin-top: 220px;
+    background-color: #00000036;
+    margin-top: 200px;
+    display: none;
+    border-radius: 5px;
+}
+
+.end-game-page {
+    margin: 170px auto;
+    border-radius: 5px;
+    font-size: 22px;
+    font-weight: 600;
+    color: white;
+    font-size: 50px;
+}
+
+#start-container {
+  z-index: 999;
+  /* float: right; */
+  position: absolute;
+  width: 435px;
+  height: 720px;
+  background-color: #faf8ef;
+  padding: 80px 25px;
+  transition: 0.5s;
+  /* display: none; */
+}
+
+.start-page {
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+p.instruction {
+  font-size: 16px;
+  line-height: 22px;
+  font-family: sans-serif;
+}
+
+h1.title-instruction {
+  font-size: 30px;
+  text-align: center;
+  padding-bottom: 30px;
+}
+
+.speaker {
+    float: left;
+    width: 5%;
+    margin: 35px 27px;
+}
+
+.speaker:hover {
+  cursor: pointer;
+}
+
+.button-start1{
+  font-size: 16px;
+  background-color: #f08f5b;
+  color: white;
+  border: none;
+  font-family: sans-serif;
+  font-weight: 550;
+  padding: 10px;
+  border-radius: 5px;
+  margin: auto;
+  cursor: pointer;
+}
+
+.btn-center {
+  width: 100%;
+  text-align: center;
+  margin-top: 20px;
+}
+
 .container {
   background-color: #f0f1e5;
   padding: 10px;
@@ -96,7 +177,7 @@ button {
   margin-top: 30px;
   background-color: #f08f5b;
   width: 300px;
-  margin-left: 350px;
+  margin-left: 260px;
   padding: 10px;
 }
 
